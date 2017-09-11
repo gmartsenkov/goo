@@ -11,6 +11,7 @@ import (
 type Editor struct {
 	windows       []*windows.Window
 	dimensions    common.Dimensions
+	State         uint8
 	currentWindow uint8
 }
 

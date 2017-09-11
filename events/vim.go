@@ -1,6 +1,7 @@
 package events
 
 import "goo/editors"
+import "goo/common"
 
 type VimEvent struct {
 	Key rune
@@ -15,19 +16,19 @@ func (event *VimEvent) Process(key rune, editor *editors.Editor) {
 
 var VimEvents = []VimEvent{
 	VimEvent{
-		Key: 106,
+		Key: common.KeyJ,
 		fn:  func(w *editors.Editor) { w.CurrentWindow().MoveCursorDown() },
 	},
 	VimEvent{
-		Key: 107,
+		Key: common.KeyK,
 		fn:  func(w *editors.Editor) { w.CurrentWindow().MoveCursorUp() },
 	},
 	VimEvent{
-		Key: 104,
+		Key: common.KeyH,
 		fn:  func(w *editors.Editor) { w.CurrentWindow().MoveCursorLeft() },
 	},
 	VimEvent{
-		Key: 108,
+		Key: common.KeyL,
 		fn:  func(w *editors.Editor) { w.CurrentWindow().MoveCursorRight() },
 	},
 }
