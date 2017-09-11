@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"goo/editors"
 	"goo/events"
 
@@ -13,19 +12,20 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	h, w := termbox.Size()
 	mainEditor := new(editors.Editor)
+	mainEditor.NewWindow()
 
-	fmt.Println(h, w)
-	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
-	termbox.SetCell(1, 2, rune('b'), termbox.ColorDefault, termbox.ColorWhite)
-	termbox.SetCell(2, 3, rune('a'), termbox.ColorDefault, termbox.ColorWhite)
-	termbox.Flush()
+	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
 	for {
+		mainEditor.Draw()
+		termbox.Flush()
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
-			for _, event := range events.Events {
+			for _, event := range events.CoreEvents {
 				event.Process(ev.Key, mainEditor)
+			}
+			for _, event := range events.VimEvents {
+				event.Process(ev.Ch, mainEditor)
 			}
 		}
 	}
