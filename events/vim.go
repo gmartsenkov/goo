@@ -31,4 +31,8 @@ var VimEvents = []VimEvent{
 		Key: common.KeyL,
 		fn:  func(w *editors.Editor) { w.CurrentWindow().MoveCursorRight() },
 	},
+	VimEvent{
+		Key: common.KeyI,
+		fn:  func(w *editors.Editor) { w.InsertState() },
+	},
 }

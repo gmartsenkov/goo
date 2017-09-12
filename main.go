@@ -14,11 +14,19 @@ func main() {
 	}
 	mainEditor := new(editors.Editor)
 	mainEditor.NewWindow()
+	mainEditor.CurrentWindow().Content = [][]byte{
+		[]byte("blabla"),
+		[]byte(" bla bla "),
+		[]byte(""),
+	}
 
 	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+	mainEditor.Draw()
+	termbox.Flush()
 	for {
+		events.EventLoop(mainEditor)
+		termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
 		mainEditor.Draw()
 		termbox.Flush()
-		events.EventLoop(mainEditor)
 	}
 }

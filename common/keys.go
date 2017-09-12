@@ -1,8 +1,9 @@
 package common
 
 const (
-	KeyJ = 106
-	KeyK = 107
 	KeyL = 108
+	KeyK = 107
+	KeyJ = 106
+	KeyI = 105
 	KeyH = 104
 )

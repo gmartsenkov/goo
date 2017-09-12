@@ -8,39 +8,27 @@ import (
 
 type Window struct {
 	Id         uint8
-	Content    []byte
+	Content    [][]byte
 	Dimensions common.Dimensions
 	Cursor     Cursor
 }
 
-func (window *Window) MoveCursorDown() {
-	window.Cursor.Y++
-}
-
-func (window *Window) MoveCursorUp() {
-	window.Cursor.Y--
-}
-
-func (window *Window) MoveCursorLeft() {
-	window.Cursor.X--
-}
-
-func (window *Window) MoveCursorRight() {
-	window.Cursor.X++
+func (window *Window) Insert(key termbox.Key, ch rune) {
+	if ch == 0 && key == 0 {
+		return
+	}
+	tempArr := window.Content[window.Cursor.Y]
+	newLine := tempArr[:window.Cursor.X]
+	newLine = append(newLine, byte(ch))
+	newLine = append(newLine, tempArr[window.Cursor.X:]...)
+	window.Content[window.Cursor.Y] = newLine
+	window.MoveCursorRight()
 }
 
 func (window *Window) Draw() {
-	window.Content = []byte("blabla\n bla bla \n")
-	line := 0
-	row := 0
-	for _, char := range window.Content {
-		if char == byte('\n') {
-			line = line + 1
-			row = 0
-			termbox.SetCell(row, line, rune(char), termbox.ColorDefault, termbox.ColorDefault)
-		} else {
-			termbox.SetCell(row, line, rune(char), termbox.ColorDefault, termbox.ColorDefault)
-			row++
+	for l, line := range window.Content {
+		for c, char := range line {
+			termbox.SetCell(c, l, rune(char), termbox.ColorDefault, termbox.ColorDefault)
 		}
 	}
 }
