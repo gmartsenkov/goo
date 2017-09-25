@@ -95,10 +95,11 @@ func (window *Window) MoveCursorRight() {
 func (window *Window) SetCursor(x, y int) {
 	lineNumLen := window.lineNumerLen()
 
-	window.Cursor.X = x + window.Position.X + window.OffsetH + lineNumLen
-	window.Cursor.Y = y + window.Position.Y + window.OffsetV
+	window.Cursor.X = x + window.Position.X - window.OffsetH + lineNumLen
+	window.Cursor.Y = y + window.Position.Y - window.OffsetV
 
-	if window.Cursor.Y >= window.Dimensions.Rows {
+	if window.Cursor.Y > window.Dimensions.Rows+2 {
+		window.Cursor.Y--
 		window.OffsetV++
 	}
 }
