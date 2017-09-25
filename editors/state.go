@@ -13,3 +13,16 @@ func (editor *Editor) InsertState() {
 func (editor *Editor) NormalState() {
 	editor.State = StateNormal
 }
+
+func (editor *Editor) StateInWords() string {
+	switch editor.State {
+	case StateNormal:
+		return "--NORMAL--"
+	case StateInsert:
+		return "--INSERT--"
+	case StateVisual:
+		return "--VISUAL--"
+	}
+
+	return ""
+}

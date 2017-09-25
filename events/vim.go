@@ -25,7 +25,7 @@ var VimEvents = []VimEvent{
 		Key: common.KeyShiftA,
 		fn: func(w *editors.Editor) {
 			window := w.CurrentWindow()
-			cursor := window.Cursor
+			cursor := window.ContentCursor()
 
 			lineCharCount := len(window.Content[cursor.Y])
 			window.Content[cursor.Y] = append(window.Content[cursor.Y], byte(' '))
@@ -38,8 +38,9 @@ var VimEvents = []VimEvent{
 		Key: common.KeyShiftI,
 		fn: func(w *editors.Editor) {
 			window := w.CurrentWindow()
-			cursor := window.Cursor
+			cursor := window.ContentCursor()
 
+			window.OffsetH = 0
 			window.SetCursor(0, cursor.Y)
 			w.InsertState()
 		},
@@ -48,12 +49,12 @@ var VimEvents = []VimEvent{
 		Key: common.KeyA,
 		fn: func(w *editors.Editor) {
 			window := w.CurrentWindow()
-			cursor := window.Cursor
+			cursor := window.ContentCursor()
 			if len(window.Content[cursor.Y])-1 == cursor.X {
 				window.Content[cursor.Y] = append(window.Content[cursor.Y], byte(' '))
 			}
 
-			window.SetCursor(window.Cursor.X+1, window.Cursor.Y)
+			window.SetCursor(cursor.X+1, cursor.Y)
 			w.InsertState()
 		},
 	},

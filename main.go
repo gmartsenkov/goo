@@ -1,8 +1,10 @@
 package main
 
 import (
+	"goo/common"
 	"goo/editors"
 	"goo/events"
+	"goo/windows"
 
 	"github.com/nsf/termbox-go"
 )
@@ -14,9 +16,38 @@ func main() {
 	}
 	mainEditor := new(editors.Editor)
 	mainEditor.NewWindow()
-	mainEditor.CurrentWindow().Content = [][]byte{
+	powerline := mainEditor.CurrentWindow()
+	powerline.Dimensions = common.Dimensions{
+		Cols: 100,
+		Rows: 1,
+	}
+	powerline.Position = common.Position{
+		X: 0,
+		Y: 20,
+	}
+	powerline.CustomLoopFunc = func(w *windows.Window) {
+		w.Content = [][]byte{[]byte(mainEditor.StateInWords())}
+	}
+	mainEditor.NewWindow()
+	editor := mainEditor.CurrentWindow()
+	editor.Dimensions = common.Dimensions{
+		Cols: 50,
+		Rows: 10,
+	}
+	editor.Position = common.Position{
+		X: 2,
+		Y: 2,
+	}
+	editor.CustomLoopFunc = func(w *windows.Window) {
+	}
+	editor.Cursor.X = 3
+	editor.Cursor.Y = 2
+	editor.Content = [][]byte{
 		[]byte("blabla"),
-		[]byte(" bla bla "),
+		[]byte(" blabla "),
+		[]byte(" blablax3"),
+		[]byte(" blablax3"),
+		[]byte(" blablax3"),
 		[]byte(""),
 	}
 

@@ -1,11 +1,15 @@
 package windows
 
 func (window *Window) backspace() {
-	cursor := window.Cursor
+	cursor := window.ContentCursor()
 	slice := window.Content
 
 	x := cursor.X
 	y := cursor.Y
+
+	if x == 0 && y == 0 {
+		return
+	}
 
 	if x == 0 {
 		window.SetCursor((len(slice[y-1])), y-1)
@@ -20,7 +24,7 @@ func (window *Window) backspace() {
 }
 
 func (window *Window) enter() {
-	cursor := window.Cursor
+	cursor := window.ContentCursor()
 	y := cursor.Y
 	x := cursor.X
 

@@ -16,6 +16,7 @@ type Editor struct {
 
 func (editor *Editor) Draw() {
 	for _, buffer := range editor.Windows {
+		buffer.CustomLoopFunc(buffer)
 		buffer.Draw()
 	}
 	cursor := editor.CurrentWindow().Cursor

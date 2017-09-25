@@ -9,10 +9,23 @@ type Cursor struct {
 	Y int
 }
 
+func (window *Window) ContentCursor() Cursor {
+	lineNumLen := window.lineNumerLen()
+	return Cursor{
+		X: window.Cursor.X - window.Position.X + window.OffsetH - lineNumLen,
+		Y: window.Cursor.Y - window.Position.Y + window.OffsetV,
+	}
+}
+
 func (window *Window) MoveCursorDown() {
-	cursor := window.Cursor
+	cursor := window.ContentCursor()
 
 	if cursor.Y >= len(window.Content)-1 {
+		return
+	}
+
+	if cursor.Y >= window.Dimensions.Rows {
+		window.OffsetV++
 		return
 	}
 
@@ -26,8 +39,14 @@ func (window *Window) MoveCursorDown() {
 }
 
 func (window *Window) MoveCursorUp() {
-	cursor := window.Cursor
+	cursor := window.ContentCursor()
+
 	if cursor.Y <= 0 {
+		return
+	}
+
+	if cursor.Y <= window.OffsetV {
+		window.OffsetV--
 		return
 	}
 
@@ -41,21 +60,45 @@ func (window *Window) MoveCursorUp() {
 }
 
 func (window *Window) MoveCursorLeft() {
-	if window.Cursor.X <= 0 {
+	cursor := window.ContentCursor()
+
+	if cursor.X <= 0 {
+		return
+	}
+
+	if cursor.X <= window.OffsetH {
+		window.OffsetH--
 		return
 	}
 	window.Cursor.X--
 }
 
+func (window *Window) ForceMoveCursorRight() {
+	window.Cursor.X++
+}
+
 func (window *Window) MoveCursorRight() {
-	cursor := window.Cursor
-	if cursor.X >= len(window.Content[cursor.Y])-1 {
+	cursor := window.ContentCursor()
+
+	lineLen := len(window.Content[cursor.Y]) - 1
+	if cursor.X >= lineLen {
+		return
+	}
+
+	if cursor.X >= window.Dimensions.Cols {
+		window.OffsetH++
 		return
 	}
 	window.Cursor.X++
 }
 
 func (window *Window) SetCursor(x, y int) {
-	window.Cursor.X = x
-	window.Cursor.Y = y
+	lineNumLen := window.lineNumerLen()
+
+	window.Cursor.X = x + window.Position.X + window.OffsetH + lineNumLen
+	window.Cursor.Y = y + window.Position.Y + window.OffsetV
+
+	if window.Cursor.Y >= window.Dimensions.Rows {
+		window.OffsetV++
+	}
 }
