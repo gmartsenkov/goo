@@ -1,6 +1,8 @@
 package windows
 
 import (
+	"goo/common"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -10,7 +12,12 @@ var _ = Describe("Window Cursor", func() {
 		window *Window
 	)
 	BeforeEach(func() {
-		window = &Window{}
+		window = &Window{
+			Dimensions: common.Dimensions{
+				Rows: 100,
+				Cols: 100,
+			},
+		}
 		window.SetCursor(0, 0)
 	})
 
@@ -33,6 +40,21 @@ var _ = Describe("Window Cursor", func() {
 				Y: 0,
 			}))
 		})
+
+		Context("when there is no line above", func() {
+			It("does not alter the cursor", func() {
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+				window.MoveCursorUp()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+			})
+		})
+
 		Context("when above line is shorter", func() {
 			It("corrects X as well", func() {
 				window.SetCursor(1, 1)
@@ -44,6 +66,55 @@ var _ = Describe("Window Cursor", func() {
 				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
 					X: 0,
 					Y: 0,
+				}))
+			})
+		})
+	})
+
+	Describe("MoveCursorDown", func() {
+		BeforeEach(func() {
+			window.Content = [][]byte{
+				[]byte("23"),
+				[]byte("1"),
+			}
+		})
+		It("moves the cursor down", func() {
+			window.SetCursor(0, 0)
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 0,
+				Y: 0,
+			}))
+			window.MoveCursorDown()
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 0,
+				Y: 1,
+			}))
+		})
+		Context("when there is no line below", func() {
+			It("does not alter the cursor", func() {
+				window.SetCursor(0, 1)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+				window.MoveCursorDown()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+			})
+		})
+		Context("when below line is shorter", func() {
+			It("corrects X", func() {
+				window.SetCursor(1, 0)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 1,
+					Y: 0,
+				}))
+				window.MoveCursorDown()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
 				}))
 			})
 		})
