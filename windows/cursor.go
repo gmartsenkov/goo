@@ -74,6 +74,12 @@ func (window *Window) MoveCursorLeft() {
 }
 
 func (window *Window) ForceMoveCursorRight() {
+	cursor := window.ContentCursor()
+	if cursor.X >= window.Dimensions.Cols {
+		window.OffsetH++
+		return
+	}
+
 	window.Cursor.X++
 }
 
