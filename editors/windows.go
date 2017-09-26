@@ -17,11 +17,9 @@ func (editor *Editor) CurrentWindow() *windows.Window {
 	return &windows.Window{}
 }
 
-func (editor *Editor) NewWindow() {
+func (editor *Editor) NewWindow(window *windows.Window) {
 	id := uint8(len(editor.Windows) + 1)
-	window := &windows.Window{
-		Id: id,
-	}
+	window.Id = id
 	editor.currentWindow = id
 	editor.Windows = append(editor.Windows, window)
 }

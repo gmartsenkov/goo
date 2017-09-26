@@ -15,33 +15,38 @@ func main() {
 		panic(err)
 	}
 	mainEditor := new(editors.Editor)
-	mainEditor.NewWindow()
-	powerline := mainEditor.CurrentWindow()
-	powerline.Dimensions = common.Dimensions{
-		Cols: 100,
-		Rows: 1,
+	powerline(mainEditor)
+	fileEditor(mainEditor)
+
+	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+	mainEditor.Draw()
+	termbox.Flush()
+	for {
+		events.EventLoop(mainEditor)
+		termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+		mainEditor.Draw()
+		termbox.Flush()
 	}
-	powerline.Position = common.Position{
-		X: 0,
-		Y: 20,
-	}
-	powerline.CustomLoopFunc = func(w *windows.Window) {
-		w.Content = [][]byte{[]byte(mainEditor.StateInWords())}
-	}
-	mainEditor.NewWindow()
+}
+
+func fileEditor(mainEditor *editors.Editor) {
+	w, h := termbox.Size()
+
+	mainEditor.NewWindow(&windows.Window{
+		EnableLineNum: true,
+	})
 	editor := mainEditor.CurrentWindow()
 	editor.Dimensions = common.Dimensions{
-		Cols: 50,
-		Rows: 10,
+		Cols: w,
+		Rows: h - 1,
 	}
 	editor.Position = common.Position{
-		X: 2,
-		Y: 2,
+		X: 0,
+		Y: 0,
 	}
 	editor.CustomLoopFunc = func(w *windows.Window) {
 	}
-	editor.Cursor.X = 3
-	editor.Cursor.Y = 2
+	editor.SetCursor(0, 0)
 	editor.Content = [][]byte{
 		[]byte("blabla"),
 		[]byte(" blabla "),
@@ -57,29 +62,25 @@ func main() {
 		[]byte("clablax3"),
 		[]byte("clablax3"),
 		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte(""),
 	}
 
-	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
-	mainEditor.Draw()
-	termbox.Flush()
-	for {
-		events.EventLoop(mainEditor)
-		termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
-		mainEditor.Draw()
-		termbox.Flush()
+}
+
+func powerline(editor *editors.Editor) {
+	w, h := termbox.Size()
+	editor.NewWindow(&windows.Window{
+		EnableBorder: true,
+	})
+	powerline := editor.CurrentWindow()
+	powerline.Dimensions = common.Dimensions{
+		Cols: w,
+		Rows: 1,
+	}
+	powerline.Position = common.Position{
+		X: 0,
+		Y: h - 1,
+	}
+	powerline.CustomLoopFunc = func(w *windows.Window) {
+		w.Content = [][]byte{[]byte(editor.StateInWords())}
 	}
 }
