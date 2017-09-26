@@ -197,4 +197,80 @@ var _ = Describe("Window Cursor", func() {
 			})
 		})
 	})
+
+	Describe("MoveCursorLeft", func() {
+		BeforeEach(func() {
+			window.Content = [][]byte{
+				[]byte("1234"),
+			}
+		})
+
+		It("moves the cursor to the left", func() {
+			window.SetCursor(3, 0)
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 3,
+				Y: 0,
+			}))
+
+			window.MoveCursorLeft()
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 2,
+				Y: 0,
+			}))
+		})
+
+		Context("when cursor is on the first character", func() {
+			It("doesn't move the cursor to the left", func() {
+				window.SetCursor(0, 0)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+
+				window.MoveCursorLeft()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+			})
+		})
+	})
+
+	Describe("MoveCursorRight", func() {
+		BeforeEach(func() {
+			window.Content = [][]byte{
+				[]byte("1234"),
+			}
+		})
+
+		It("moves the cursor to the right", func() {
+			window.SetCursor(0, 0)
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 0,
+				Y: 0,
+			}))
+
+			window.MoveCursorRight()
+			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+				X: 1,
+				Y: 0,
+			}))
+		})
+
+		Context("when cursor is on the last character", func() {
+			It("doesn't move the cursor any further", func() {
+				window.SetCursor(3, 0)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 3,
+					Y: 0,
+				}))
+
+				window.MoveCursorRight()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 3,
+					Y: 0,
+				}))
+			})
+		})
+	})
 })
