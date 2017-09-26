@@ -4,7 +4,7 @@ run:
 	go run main.go
 
 test:
-	ginkgo common
+	ginkgo common windows
 
 godep:
 	godep save ./...

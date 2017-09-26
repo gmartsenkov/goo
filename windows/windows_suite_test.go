@@ -1,4 +1,4 @@
-package common_test
+package windows
 
 import (
 	"testing"
@@ -9,5 +9,5 @@ import (
 
 func TestFormatters(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Common Helpers")
+	RunSpecs(t, "Windows")
 }
