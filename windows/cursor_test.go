@@ -14,8 +14,8 @@ var _ = Describe("Window Cursor", func() {
 	BeforeEach(func() {
 		window = &Window{
 			Dimensions: common.Dimensions{
-				Rows: 100,
-				Cols: 100,
+				Rows: 2,
+				Cols: 2,
 			},
 		}
 		window.SetCursor(0, 0)
@@ -26,8 +26,10 @@ var _ = Describe("Window Cursor", func() {
 			window.Content = [][]byte{
 				[]byte("1"),
 				[]byte("23"),
+				[]byte("234"),
 			}
 		})
+
 		It("moves the cursor up", func() {
 			window.SetCursor(0, 1)
 			Expect(window.Cursor).To(BeEquivalentTo(Cursor{
@@ -48,6 +50,48 @@ var _ = Describe("Window Cursor", func() {
 					Y: 0,
 				}))
 				window.MoveCursorUp()
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+			})
+		})
+
+		Context("when line is outside the window bounds", func() {
+			BeforeEach(func() {
+				window.Dimensions.Rows = 1
+			})
+			It("decreases the vertical offset", func() {
+				window.SetCursor(0, 0)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+				Expect(window.OffsetV).To(Equal(0))
+
+				window.MoveCursorDown()
+				Expect(window.OffsetV).To(Equal(0))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+				window.MoveCursorDown()
+
+				Expect(window.OffsetV).To(Equal(1))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+
+				window.MoveCursorUp()
+				Expect(window.OffsetV).To(Equal(1))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+
+				window.MoveCursorUp()
+				Expect(window.OffsetV).To(Equal(0))
 				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
 					X: 0,
 					Y: 0,
@@ -104,6 +148,40 @@ var _ = Describe("Window Cursor", func() {
 				}))
 			})
 		})
+
+		Context("when line is outside the window bounds", func() {
+			BeforeEach(func() {
+				window.Dimensions.Rows = 1
+				window.Content = [][]byte{
+					[]byte("1"),
+					[]byte("23"),
+					[]byte("234"),
+				}
+			})
+			It("increments the vertical offset", func() {
+				window.SetCursor(0, 0)
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+				Expect(window.OffsetV).To(Equal(0))
+
+				window.MoveCursorDown()
+				Expect(window.OffsetV).To(Equal(0))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+				window.MoveCursorDown()
+
+				Expect(window.OffsetV).To(Equal(1))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+			})
+		})
+
 		Context("when below line is shorter", func() {
 			It("corrects X", func() {
 				window.SetCursor(1, 0)
