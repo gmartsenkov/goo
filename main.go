@@ -5,6 +5,7 @@ import (
 	"goo/editors"
 	"goo/events"
 	"goo/windows"
+	"io/ioutil"
 
 	"github.com/nsf/termbox-go"
 )
@@ -38,7 +39,7 @@ func fileEditor(mainEditor *editors.Editor) {
 	editor := mainEditor.CurrentWindow()
 	editor.Dimensions = common.Dimensions{
 		Cols: w,
-		Rows: h - 1,
+		Rows: h - 3,
 	}
 	editor.Position = common.Position{
 		X: 0,
@@ -46,24 +47,12 @@ func fileEditor(mainEditor *editors.Editor) {
 	}
 	editor.CustomLoopFunc = func(w *windows.Window) {
 	}
-	editor.SetCursor(0, 0)
-	editor.Content = [][]byte{
-		[]byte("blabla"),
-		[]byte(" blabla "),
-		[]byte(" blablax3"),
-		[]byte(" blablax3"),
-		[]byte(" blablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
-		[]byte("clablax3"),
+	editor.SetCursor(1, 0)
+	file, err := ioutil.ReadFile("main.go")
+	if err != nil {
+		panic("file not found")
 	}
-
+	editor.SplitAndSetContent(file)
 }
 
 func powerline(editor *editors.Editor) {

@@ -1,6 +1,7 @@
 package windows
 
 import (
+	"bytes"
 	"goo/common"
 	"goo/window_events"
 )
@@ -18,4 +19,8 @@ type Window struct {
 	OffsetH           int
 	OffsetV           int
 	Cursor            Cursor
+}
+
+func (window *Window) SplitAndSetContent(content []byte) {
+	window.Content = bytes.Split(content, []byte("\n"))
 }

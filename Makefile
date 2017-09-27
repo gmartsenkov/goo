@@ -4,7 +4,7 @@ run:
 	go run main.go
 
 test:
-	ginkgo common windows
+	ginkgo watch --notify common windows
 
 godep:
 	godep save ./...

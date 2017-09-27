@@ -157,9 +157,10 @@ var _ = Describe("Window Cursor", func() {
 					[]byte("23"),
 					[]byte("234"),
 				}
-			})
-			It("increments the vertical offset", func() {
 				window.SetCursor(0, 0)
+			})
+
+			It("increments the vertical offset", func() {
 				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
 					X: 0,
 					Y: 0,
@@ -179,6 +180,39 @@ var _ = Describe("Window Cursor", func() {
 					X: 0,
 					Y: 1,
 				}))
+			})
+
+			It("does not increment the vertical offset at end of content", func() {
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 0,
+				}))
+				Expect(window.OffsetV).To(Equal(0))
+
+				window.MoveCursorDown()
+				Expect(window.OffsetV).To(Equal(0))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+				window.MoveCursorDown()
+
+				Expect(window.OffsetV).To(Equal(1))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+
+				for i := 0; i <= 5; i++ {
+					window.MoveCursorDown()
+				}
+
+				Expect(window.OffsetV).To(Equal(1))
+				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
+					X: 0,
+					Y: 1,
+				}))
+
 			})
 		})
 
