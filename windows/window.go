@@ -22,5 +22,9 @@ type Window struct {
 }
 
 func (window *Window) SplitAndSetContent(content []byte) {
-	window.Content = bytes.Split(content, []byte("\n"))
+	tmp := bytes.Split(content, []byte("\n"))
+
+	for _, line := range tmp {
+		window.Content = append(window.Content, append([]byte{}, line...))
+	}
 }
