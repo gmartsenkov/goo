@@ -12,6 +12,7 @@ var _ = Describe("Window", func() {
 	BeforeEach(func() {
 		window = &Window{}
 	})
+
 	Describe("SplitAndSetContent", func() {
 		It("transforms the string into a two dimensional byte array", func() {
 			Expect(window.Content).To(BeEmpty())
