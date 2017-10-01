@@ -12,6 +12,7 @@ func EventLoop(menu *menu.Menu, editor *editors.Editor) {
 	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
 
 	menuWindow := &windows.Window{}
+	menuWindow.EnableBoldContent = true
 	menuWindow.EnableBorder = true
 	menuWindow.EnableSolidForeground = true
 

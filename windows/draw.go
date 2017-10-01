@@ -24,7 +24,7 @@ func (window *Window) Draw() {
 		for c, char := range line {
 			if c >= horizontalOffset && c <= size.Cols+horizontalOffset {
 				if l >= verticalOffset && l <= size.Rows+verticalOffset {
-					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, rune(char), termbox.ColorDefault, termbox.ColorDefault)
+					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, rune(char), window.textStyle(), termbox.ColorDefault)
 				}
 			}
 		}
@@ -40,4 +40,11 @@ func (window *Window) drawSolidForeground() {
 			termbox.SetCell(x, y, rune(' '), termbox.ColorDefault, termbox.ColorDefault)
 		}
 	}
+}
+
+func (window *Window) textStyle() termbox.Attribute {
+	if window.EnableBoldContent {
+		return termbox.ColorDefault | termbox.AttrBold
+	}
+	return termbox.ColorDefault
 }

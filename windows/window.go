@@ -14,6 +14,7 @@ type Window struct {
 	EventHandlers         []window_events.WindowEvent
 	EnableLineNum         bool
 	EnableBorder          bool
+	EnableBoldContent     bool
 	CustomLoopFunc        func(*Window)
 	Dimensions            common.Dimensions
 	Position              common.Position
