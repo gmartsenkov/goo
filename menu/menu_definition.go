@@ -17,11 +17,7 @@ var MENU = Menu{
 					Key:   rune('l'),
 					Fn: func(e *editors.Editor) {
 						w := e.CurrentWindow()
-						if w.EnableLineNum {
-							w.EnableLineNum = false
-						} else {
-							w.EnableLineNum = true
-						}
+						w.EnableLineNum = !w.EnableLineNum
 					},
 				},
 			},
@@ -35,7 +31,7 @@ var MENU = Menu{
 					Key:   rune('b'),
 					actions: Actions{
 						Action{
-							Title: "-> Insert State",
+							Title: "Insert State",
 							Key:   rune('m'),
 							Fn: func(e *editors.Editor) {
 								e.InsertState()

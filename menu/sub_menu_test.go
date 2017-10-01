@@ -56,7 +56,7 @@ var _ = Describe("SubMenu", func() {
 
 		Context("with width 20", func() {
 			It("returns correct content", func() {
-				content := subMenus.ContentForWindow(20)
+				content := subMenus.ContentForWindow(SubMenu{}, 20)
 				Expect(content).To(Equal([][]byte{
 					[]byte(" Test 1  Test 2 "),
 					[]byte(" Test 3  Test 4 "),
@@ -64,9 +64,9 @@ var _ = Describe("SubMenu", func() {
 			})
 		})
 		Context("with width 10", func() {
-			It("returns correct content", func() {
-				content := subMenus.ContentForWindow(10)
-				Expect(content).To(Equal([][]byte{
+			FIt("returns correct content", func() {
+				content := subMenus.ContentForWindow(SubMenu{}, 10)
+				Expect(content).To(BeEquivalentTo([][]byte{
 					[]byte(" Test 1 "),
 					[]byte(" Test 2 "),
 					[]byte(" Test 3 "),

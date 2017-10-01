@@ -40,7 +40,7 @@ func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]byte {
 	}
 
 	for _, element := range elements {
-		text := fmt.Sprintf(" %s - %s ", string(element.key), element.title)
+		text := fmt.Sprintf(" %s- %s ", string(element.key), element.title)
 		if len(content[row])+len(text) >= width {
 			content = append(content, []byte(text))
 			row++
