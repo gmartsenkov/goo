@@ -4,6 +4,7 @@ import (
 	"goo/common"
 	"goo/editors"
 	"goo/events"
+	"goo/menu"
 	"goo/windows"
 	"io/ioutil"
 
@@ -16,6 +17,7 @@ func main() {
 		panic(err)
 	}
 	mainEditor := new(editors.Editor)
+	menu := menu.MENU
 	powerline(mainEditor)
 	fileEditor(mainEditor)
 
@@ -23,10 +25,7 @@ func main() {
 	mainEditor.Draw()
 	termbox.Flush()
 	for {
-		events.EventLoop(mainEditor)
-		termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
-		mainEditor.Draw()
-		termbox.Flush()
+		events.EventLoop(&menu, mainEditor)
 	}
 }
 

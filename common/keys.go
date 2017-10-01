@@ -9,4 +9,5 @@ const (
 	KeyA      = 97
 	KeyShiftA = 65
 	KeyShiftI = 73
+	Space     = 32
 )

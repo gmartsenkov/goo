@@ -1,9 +1,9 @@
 package editors
 
 const (
-	StateNormal = 0
-	StateInsert = 1
-	StateVisual = 2
+	StateNormal uint8 = 0
+	StateInsert uint8 = 1
+	StateVisual uint8 = 2
 )
 
 func (editor *Editor) InsertState() {

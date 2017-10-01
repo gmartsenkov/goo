@@ -9,6 +9,10 @@ func (window *Window) Draw() {
 	lineNumberMax := window.lineNumerLen()
 	size := window.Dimensions
 
+	if window.EnableSolidForeground {
+		window.drawSolidForeground()
+	}
+
 	if window.EnableBorder {
 		window.drawBorders()
 	}
@@ -23,6 +27,17 @@ func (window *Window) Draw() {
 					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, rune(char), termbox.ColorDefault, termbox.ColorDefault)
 				}
 			}
+		}
+	}
+}
+
+func (window *Window) drawSolidForeground() {
+	pos := window.Position
+	dimensions := window.Dimensions
+
+	for y := pos.Y; y <= pos.Y+dimensions.Rows; y++ {
+		for x := pos.X; x <= pos.X+dimensions.Cols; x++ {
+			termbox.SetCell(x, y, rune(' '), termbox.ColorDefault, termbox.ColorDefault)
 		}
 	}
 }
