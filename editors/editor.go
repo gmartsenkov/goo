@@ -15,10 +15,14 @@ type Editor struct {
 }
 
 func (editor *Editor) Draw() {
+	editor.DrawWindows()
+	cursor := editor.CurrentWindow().Cursor
+	termbox.SetCursor(cursor.X, cursor.Y)
+}
+
+func (editor *Editor) DrawWindows() {
 	for _, buffer := range editor.Windows {
 		buffer.CustomLoopFunc(buffer)
 		buffer.Draw()
 	}
-	cursor := editor.CurrentWindow().Cursor
-	termbox.SetCursor(cursor.X, cursor.Y)
 }

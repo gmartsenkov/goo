@@ -11,8 +11,9 @@ type SubMenu struct {
 }
 
 type element struct {
-	key   rune
-	title string
+	key    rune
+	title  string
+	symbol rune
 }
 
 type SubMenus []SubMenu
@@ -32,15 +33,23 @@ func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]byte {
 	row := 0
 
 	for _, subMenu := range subMenus {
-		elements = append(elements, element{key: subMenu.Key, title: subMenu.Title})
+		elements = append(elements, element{
+			key:    subMenu.Key,
+			title:  subMenu.Title,
+			symbol: '\u25ce',
+		})
 	}
 
 	for _, action := range submenu.actions {
-		elements = append(elements, element{key: action.Key, title: action.Title})
+		elements = append(elements, element{
+			key:    action.Key,
+			title:  action.Title,
+			symbol: '\u25ce',
+		})
 	}
 
 	for _, element := range elements {
-		text := fmt.Sprintf(" %s- %s ", string(element.key), element.title)
+		text := fmt.Sprintf(" %s-%s ", element.title, string(element.key))
 		if len(content[row])+len(text) >= width {
 			content = append(content, []byte(text))
 			row++
