@@ -23,4 +23,4 @@ test:
   pre:
     - cd $BUILD_PATH && go vet $(go list ./... | grep -v /vendor/)
   override:
-    - cd $BUILD_PATH && godep go test ./...
+    - cd $BUILD_PATH && ginkgo windows menu common
