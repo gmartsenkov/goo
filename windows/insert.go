@@ -13,7 +13,7 @@ func (window *Window) Insert(key termbox.Key, ch rune) {
 	}
 
 	cursor := window.ContentCursor()
-	newLine := common.SliceInsertIndex(window.Content[cursor.Y], byte(ch), cursor.X)
+	newLine := common.SliceInsertIndex(window.Content[cursor.Y], ch, cursor.X)
 
 	window.Content[cursor.Y] = newLine
 	window.ForceMoveCursorRight()

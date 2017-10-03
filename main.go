@@ -69,6 +69,6 @@ func powerline(editor *editors.Editor) {
 		Y: h - 1,
 	}
 	powerline.CustomLoopFunc = func(w *windows.Window) {
-		w.Content = [][]byte{[]byte(editor.StateInWords())}
+		w.Content = [][]rune{[]rune(editor.StateInWords())}
 	}
 }

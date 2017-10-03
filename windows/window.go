@@ -8,7 +8,7 @@ import (
 
 type Window struct {
 	Id                    uint8
-	Content               [][]byte
+	Content               [][]rune
 	DisableInsertMode     bool
 	EnableSolidForeground bool
 	EventHandlers         []window_events.WindowEvent
@@ -27,6 +27,6 @@ func (window *Window) SplitAndSetContent(content []byte) {
 	tmp := bytes.Split(content, []byte("\n"))
 
 	for _, line := range tmp {
-		window.Content = append(window.Content, append([]byte{}, line...))
+		window.Content = append(window.Content, append([]rune{}, []rune(string(line))...))
 	}
 }

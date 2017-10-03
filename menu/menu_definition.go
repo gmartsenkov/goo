@@ -34,9 +34,9 @@ var MENU = Menu{
 					Key:   rune('q'),
 					Fn: func(e *editors.Editor) {
 						w := windows.Window{}
-						w.Content = [][]byte{
-							[]byte("Confirm exit"),
-							[]byte("    y/n     "),
+						w.Content = [][]rune{
+							[]rune("Confirm exit"),
+							[]rune("    y/n     "),
 						}
 						w.Position.X = 20
 						w.Position.Y = 10

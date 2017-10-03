@@ -14,7 +14,7 @@ func (window *Window) backspace() {
 	if x == 0 {
 		window.SetCursor((len(slice[y-1])), y-1)
 		slice[y-1] = append(slice[y-1], slice[y]...)
-		slice[y] = []byte{}
+		slice[y] = []rune{}
 		return
 	}
 
@@ -29,10 +29,10 @@ func (window *Window) enter() {
 	x := cursor.X
 
 	slice := window.Content
-	tempSlice := [][]byte{}
+	tempSlice := [][]rune{}
 	tempSlice = append(tempSlice, slice[:y]...)
-	tempSlice = append(tempSlice, append([]byte{}, slice[y][:x]...))
-	tempSlice = append(tempSlice, append([]byte{}, slice[y][x:]...))
+	tempSlice = append(tempSlice, append([]rune{}, slice[y][:x]...))
+	tempSlice = append(tempSlice, append([]rune{}, slice[y][x:]...))
 	tempSlice = append(tempSlice, slice[y+1:]...)
 
 	window.Content = tempSlice

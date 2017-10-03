@@ -1,7 +1,6 @@
 package menu
 
 import "errors"
-import "fmt"
 
 type SubMenu struct {
 	Title    string
@@ -27,8 +26,8 @@ func (subMenus SubMenus) FindByKey(key rune) (SubMenu, error) {
 	return SubMenu{}, errors.New("SubMenuNotFound")
 }
 
-func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]byte {
-	content := [][]byte{[]byte{}}
+func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]rune {
+	content := [][]rune{[]rune{}}
 	elements := []element{}
 	row := 0
 
@@ -36,7 +35,7 @@ func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]byte {
 		elements = append(elements, element{
 			key:    subMenu.Key,
 			title:  subMenu.Title,
-			symbol: '\u25ce',
+			symbol: '\u2295',
 		})
 	}
 
@@ -49,12 +48,19 @@ func (subMenus SubMenus) ContentForWindow(submenu SubMenu, width int) [][]byte {
 	}
 
 	for _, element := range elements {
-		text := fmt.Sprintf(" %s-%s ", element.title, string(element.key))
-		if len(content[row])+len(text) >= width {
-			content = append(content, []byte(text))
+		x := []rune{}
+		x = append(x, rune(' '))
+		x = append(x, rune(' '))
+		x = append(x, []rune(element.title)...)
+		x = append(x, rune('\u2794'))
+		x = append(x, rune(' '))
+		x = append(x, element.key)
+
+		if len(content[row])+len(x) >= width {
+			content = append(content, x)
 			row++
 		} else {
-			content[row] = append(content[row], []byte(text)...)
+			content[row] = append(content[row], x...)
 		}
 	}
 
