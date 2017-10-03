@@ -1,6 +1,10 @@
 package windows
 
-import termbox "github.com/nsf/termbox-go"
+import (
+	"goo/common"
+
+	termbox "github.com/nsf/termbox-go"
+)
 
 func (window *Window) Draw() {
 	position := window.Position
@@ -24,7 +28,7 @@ func (window *Window) Draw() {
 		for c, cell := range line {
 			if c >= horizontalOffset && c <= size.Cols+horizontalOffset {
 				if l >= verticalOffset && l <= size.Rows+verticalOffset {
-					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, cell.Ch, window.textStyle(), termbox.ColorDefault)
+					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, cell.Ch, window.textStyle(cell), termbox.ColorDefault)
 				}
 			}
 		}
@@ -42,9 +46,16 @@ func (window *Window) drawSolidForeground() {
 	}
 }
 
-func (window *Window) textStyle() termbox.Attribute {
-	if window.EnableBoldContent {
-		return termbox.ColorDefault | termbox.AttrBold
+func (window *Window) textStyle(cell common.Cell) termbox.Attribute {
+	style := termbox.ColorDefault
+
+	if cell.Fg != 0 {
+		style = cell.Fg
 	}
-	return termbox.ColorDefault
+
+	if window.EnableBoldContent {
+		style = style | termbox.AttrBold
+	}
+
+	return style
 }

@@ -35,7 +35,12 @@ var MENU = Menu{
 					Fn: func(e *editors.Editor) {
 						w := windows.Window{}
 						w.Content = append(w.Content, common.BytesToCells([]byte("Are you sure you want to quit?")))
-						w.Content = append(w.Content, common.BytesToCells([]byte("            y/n               ")))
+						yN := append([]common.Cell{}, common.RunesToCells([]rune("            "))...)
+						yN = append(yN, common.Cell{Ch: 'y', Fg: termbox.ColorGreen})
+						yN = append(yN, common.Cell{Ch: '/'})
+						yN = append(yN, common.Cell{Ch: 'n', Fg: termbox.ColorRed})
+						yN = append(yN, common.RunesToCells([]rune("            "))...)
+						w.Content = append(w.Content, yN)
 						w.Position.X = 20
 						w.Position.Y = 10
 						w.Dimensions.Cols = 30
