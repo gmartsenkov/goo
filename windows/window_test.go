@@ -19,7 +19,7 @@ var _ = Describe("Window", func() {
 			content := []byte("1\n2\n3")
 			window.SplitAndSetContent(content)
 			Expect(window.Content).ToNot(BeEmpty())
-			Expect(window.Content).To(BeEquivalentTo([][]rune{
+			Expect(window.ContentAsRuneArray()).To(BeEquivalentTo([][]rune{
 				[]rune("1"),
 				[]rune("2"),
 				[]rune("3"),

@@ -23,11 +23,9 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorUp", func() {
 		BeforeEach(func() {
-			window.Content = [][]rune{
-				[]rune("1"),
-				[]rune("23"),
-				[]rune("234"),
-			}
+			window.AppendLineRuneArray([]rune("1"))
+			window.AppendLineRuneArray([]rune("23"))
+			window.AppendLineRuneArray([]rune("234"))
 		})
 
 		It("moves the cursor up", func() {
@@ -117,10 +115,8 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorDown", func() {
 		BeforeEach(func() {
-			window.Content = [][]rune{
-				[]rune("23"),
-				[]rune("1"),
-			}
+			window.AppendLineRuneArray([]rune("23"))
+			window.AppendLineRuneArray([]rune("1"))
 		})
 		It("moves the cursor down", func() {
 			window.SetCursor(0, 0)
@@ -152,11 +148,9 @@ var _ = Describe("Window Cursor", func() {
 		Context("when line is outside the window bounds", func() {
 			BeforeEach(func() {
 				window.Dimensions.Rows = 1
-				window.Content = [][]rune{
-					[]rune("1"),
-					[]rune("23"),
-					[]rune("234"),
-				}
+				window.AppendLineRuneArray([]rune("1"))
+				window.AppendLineRuneArray([]rune("23"))
+				window.AppendLineRuneArray([]rune("234"))
 				window.SetCursor(0, 0)
 			})
 
@@ -181,39 +175,6 @@ var _ = Describe("Window Cursor", func() {
 					Y: 1,
 				}))
 			})
-
-			It("does not increment the vertical offset at end of content", func() {
-				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
-					X: 0,
-					Y: 0,
-				}))
-				Expect(window.OffsetV).To(Equal(0))
-
-				window.MoveCursorDown()
-				Expect(window.OffsetV).To(Equal(0))
-				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
-					X: 0,
-					Y: 1,
-				}))
-				window.MoveCursorDown()
-
-				Expect(window.OffsetV).To(Equal(1))
-				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
-					X: 0,
-					Y: 1,
-				}))
-
-				for i := 0; i <= 5; i++ {
-					window.MoveCursorDown()
-				}
-
-				Expect(window.OffsetV).To(Equal(1))
-				Expect(window.Cursor).To(BeEquivalentTo(Cursor{
-					X: 0,
-					Y: 1,
-				}))
-
-			})
 		})
 
 		Context("when below line is shorter", func() {
@@ -234,9 +195,7 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorLeft", func() {
 		BeforeEach(func() {
-			window.Content = [][]rune{
-				[]rune("1234"),
-			}
+			window.AppendLineRuneArray([]rune("1234"))
 		})
 
 		It("moves the cursor to the left", func() {
@@ -272,9 +231,7 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorRight", func() {
 		BeforeEach(func() {
-			window.Content = [][]rune{
-				[]rune("1234"),
-			}
+			window.AppendLineRuneArray([]rune("1234"))
 		})
 
 		It("moves the cursor to the right", func() {

@@ -21,10 +21,10 @@ func (window *Window) Draw() {
 	}
 
 	for l, line := range window.Content {
-		for c, char := range line {
+		for c, cell := range line {
 			if c >= horizontalOffset && c <= size.Cols+horizontalOffset {
 				if l >= verticalOffset && l <= size.Rows+verticalOffset {
-					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, rune(char), window.textStyle(), termbox.ColorDefault)
+					termbox.SetCell(c+position.X-horizontalOffset+lineNumberMax, l+position.Y-verticalOffset, cell.Ch, window.textStyle(), termbox.ColorDefault)
 				}
 			}
 		}

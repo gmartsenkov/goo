@@ -13,10 +13,8 @@ var _ = Describe("Window Line Numbers", func() {
 		window = &Window{
 			EnableLineNum: true,
 		}
-		window.Content = [][]rune{
-			[]rune("1"),
-			[]rune("2"),
-		}
+		window.AppendLineRuneArray([]rune("1"))
+		window.AppendLineRuneArray([]rune("2"))
 		window.SetCursor(0, 0)
 	})
 	Describe("LineNumerLen", func() {
@@ -28,8 +26,8 @@ var _ = Describe("Window Line Numbers", func() {
 			It("returns 2 when lines between 10-99", func() {
 				Expect(window.lineNumerLen()).To(Equal(1))
 
-				for i := 0; i <= 10; i++ {
-					window.Content = append(window.Content, [][]rune{[]rune("a")}...)
+				for i := 0; i <= 11; i++ {
+					window.AppendLineRuneArray([]rune("a"))
 				}
 				Expect(window.lineNumerLen()).To(Equal(2))
 			})

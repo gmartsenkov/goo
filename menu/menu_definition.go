@@ -34,10 +34,8 @@ var MENU = Menu{
 					Key:   rune('q'),
 					Fn: func(e *editors.Editor) {
 						w := windows.Window{}
-						w.Content = [][]rune{
-							[]rune("Confirm exit"),
-							[]rune("    y/n     "),
-						}
+						w.Content = append(w.Content, common.BytesToCells([]byte("Are you sure you want to quit?")))
+						w.Content = append(w.Content, common.BytesToCells([]byte("            y/n               ")))
 						w.Position.X = 20
 						w.Position.Y = 10
 						w.Dimensions.Cols = 30

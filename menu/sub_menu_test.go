@@ -2,6 +2,7 @@ package menu
 
 import (
 	"errors"
+	"goo/common"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -61,21 +62,21 @@ var _ = Describe("SubMenu", func() {
 		Context("with width 20", func() {
 			It("returns correct content", func() {
 				content := subMenus.ContentForWindow(SubMenu{}, 30)
-				Expect(content).To(Equal([][]rune{
-					[]rune("  Test 1➔ t  Test 2➔ t"),
-					[]rune("  Test 3➔ t  Test 4➔ t"),
+				Expect(content).To(BeEquivalentTo(common.Cells{
+					common.RunesToCells([]rune("  Test 1➔ t  Test 2➔ t")),
+					common.RunesToCells([]rune("  Test 3➔ t  Test 4➔ t")),
 				}))
 			})
 		})
 		Context("with width 10", func() {
 			It("returns correct content", func() {
 				content := subMenus.ContentForWindow(SubMenu{}, 10)
-				Expect(content).To(BeEquivalentTo([][]rune{
-					[]rune{},
-					[]rune("  Test 1➔ t"),
-					[]rune("  Test 2➔ t"),
-					[]rune("  Test 3➔ t"),
-					[]rune("  Test 4➔ t"),
+				Expect(content).To(BeEquivalentTo(common.Cells{
+					common.RunesToCells([]rune("")),
+					common.RunesToCells([]rune("  Test 1➔ t")),
+					common.RunesToCells([]rune("  Test 2➔ t")),
+					common.RunesToCells([]rune("  Test 3➔ t")),
+					common.RunesToCells([]rune("  Test 4➔ t")),
 				}))
 			})
 		})

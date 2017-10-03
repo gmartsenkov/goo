@@ -1,6 +1,6 @@
 package common
 
-func SliceInsertIndex(slice []rune, char rune, index int) []rune {
-	tmp := append(slice[:index], append([]rune{char}, slice[index:]...)...)
+func SliceInsertIndex(slice []Cell, char rune, index int) []Cell {
+	tmp := append(slice[:index], append([]Cell{Cell{Ch: char}}, slice[index:]...)...)
 	return tmp
 }

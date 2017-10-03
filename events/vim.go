@@ -28,7 +28,7 @@ var VimEvents = []VimEvent{
 			cursor := window.ContentCursor()
 
 			lineCharCount := len(window.Content[cursor.Y])
-			window.Content[cursor.Y] = append(window.Content[cursor.Y], rune(' '))
+			window.Content[cursor.Y] = append(window.Content[cursor.Y], common.Cell{Ch: rune(' ')})
 
 			window.SetCursor(lineCharCount, cursor.Y)
 			w.InsertState()
@@ -51,7 +51,7 @@ var VimEvents = []VimEvent{
 			window := w.CurrentWindow()
 			cursor := window.ContentCursor()
 			if len(window.Content[cursor.Y])-1 == cursor.X {
-				window.Content[cursor.Y] = append(window.Content[cursor.Y], rune(' '))
+				window.Content[cursor.Y] = append(window.Content[cursor.Y], common.Cell{Ch: rune(' ')})
 			}
 
 			window.SetCursor(cursor.X+1, cursor.Y)

@@ -1,6 +1,7 @@
 package menu
 
 import (
+	"goo/common"
 	"goo/editors"
 	"goo/windows"
 
@@ -58,9 +59,9 @@ var _ = Describe("Menu", func() {
 			It("sets the window content to the main submenus", func() {
 				Expect(window.Content).To(BeEmpty())
 				menu.TriggerListener(window, termbox.KeySpace)
-				Expect(window.Content).To(BeEquivalentTo([][]rune{
-					[]rune("  submenu1➔ z"),
-					[]rune("  submenu2➔ z"),
+				Expect(window.Content).To(BeEquivalentTo(common.Cells{
+					common.RunesToCells([]rune("  submenu1➔ z")),
+					common.RunesToCells([]rune("  submenu2➔ z")),
 				}))
 			})
 		})
@@ -111,8 +112,8 @@ var _ = Describe("Menu", func() {
 		Context("on first enter to SubMenu", func() {
 			It("renders the submenu tree", func() {
 				menu.Process(window, editor, rune('z'))
-				Expect(window.Content).To(Equal([][]rune{
-					[]rune("  submenu1-submenu1➔ a"),
+				Expect(window.Content).To(BeEquivalentTo(common.Cells{
+					common.RunesToCells([]rune("  submenu1-submenu1➔ a")),
 				}))
 			})
 		})

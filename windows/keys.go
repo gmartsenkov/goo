@@ -1,5 +1,7 @@
 package windows
 
+import "goo/common"
+
 func (window *Window) backspace() {
 	cursor := window.ContentCursor()
 	slice := window.Content
@@ -14,7 +16,7 @@ func (window *Window) backspace() {
 	if x == 0 {
 		window.SetCursor((len(slice[y-1])), y-1)
 		slice[y-1] = append(slice[y-1], slice[y]...)
-		slice[y] = []rune{}
+		slice[y] = []common.Cell{}
 		return
 	}
 
@@ -29,10 +31,10 @@ func (window *Window) enter() {
 	x := cursor.X
 
 	slice := window.Content
-	tempSlice := [][]rune{}
+	tempSlice := [][]common.Cell{}
 	tempSlice = append(tempSlice, slice[:y]...)
-	tempSlice = append(tempSlice, append([]rune{}, slice[y][:x]...))
-	tempSlice = append(tempSlice, append([]rune{}, slice[y][x:]...))
+	tempSlice = append(tempSlice, append([]common.Cell{}, slice[y][:x]...))
+	tempSlice = append(tempSlice, append([]common.Cell{}, slice[y][x:]...))
 	tempSlice = append(tempSlice, slice[y+1:]...)
 
 	window.Content = tempSlice
