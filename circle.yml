@@ -1,0 +1,26 @@
+machine:
+  environment:
+    # GOROOT is not set by default
+    GOROOT: ""
+    GOPATH: "${HOME}/.go_project"
+    PATH: "${GOPATH}/bin:${PATH}"
+    BUILD_PATH: "${GOPATH}/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+
+dependencies:
+  pre:
+    - go get github.com/tools/godep
+    - go get github.com/onsi/ginkgo/ginkgo
+    - go get github.com/onsi/gomega
+    - sudo apt-get install sqlite3 libsqlite3-dev
+
+  override:
+    - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
+    - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
+    - sudo ln -s ${BUILD_PATH} /usr/local/go/src/${CIRCLE_PROJECT_REPONAME}
+    - sudo chmod -R 777 /usr/local/go/pkg/
+
+test:
+  pre:
+    - cd $BUILD_PATH && go vet $(go list ./... | grep -v /vendor/)
+  override:
+    - cd $BUILD_PATH && ginkgo windows menu common
