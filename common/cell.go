@@ -11,6 +11,7 @@ type Cell struct {
 }
 
 type Cells [][]Cell
+type CellsArray []Cell
 
 func BytesToCells(b []byte) []Cell {
 	tmp := []Cell{}
@@ -28,4 +29,12 @@ func RunesToCells(b []rune) []Cell {
 	}
 
 	return tmp
+}
+func CellsAsRuneArray(cells []Cell) []rune {
+	runeArray := []rune{}
+	for _, cell := range cells {
+		runeArray = append(runeArray, cell.Ch)
+	}
+
+	return runeArray
 }
