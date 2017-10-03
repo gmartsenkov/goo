@@ -34,16 +34,7 @@ func (window *Window) SplitAndSetContent(content []byte) {
 func (window *Window) ContentAsRuneArray() [][]rune {
 	tmp := [][]rune{}
 	for _, line := range window.Content {
-		tmp = append(tmp, cellsAsRuneArray(line))
-	}
-
-	return tmp
-}
-
-func cellsAsRuneArray(cells []common.Cell) []rune {
-	tmp := []rune{}
-	for _, cell := range cells {
-		tmp = append(tmp, cell.Ch)
+		tmp = append(tmp, common.CellsAsRuneArray(line))
 	}
 
 	return tmp
