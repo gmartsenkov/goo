@@ -9,7 +9,7 @@ import (
 
 func (editor *Editor) CurrentWindow() *windows.Window {
 	for _, window := range editor.Windows {
-		if editor.currentWindow == window.Id {
+		if editor.currentWindow == window.ID {
 			return window
 		}
 	}
@@ -19,7 +19,7 @@ func (editor *Editor) CurrentWindow() *windows.Window {
 
 func (editor *Editor) NewWindow(window *windows.Window) {
 	id := uint8(len(editor.Windows) + 1)
-	window.Id = id
+	window.ID = id
 	editor.currentWindow = id
 	editor.Windows = append(editor.Windows, window)
 }

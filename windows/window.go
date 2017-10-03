@@ -7,7 +7,7 @@ import (
 )
 
 type Window struct {
-	Id                    uint8
+	ID                    uint8
 	Content               common.Cells
 	DisableInsertMode     bool
 	EnableSolidForeground bool
