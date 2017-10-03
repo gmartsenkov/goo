@@ -46,9 +46,7 @@ var MENU = Menu{
 						w.EnableSolidForeground = true
 						w.EnableBoldContent = true
 
-						for _, editorWindow := range e.Windows {
-							editorWindow.Draw()
-						}
+						e.DrawWindows()
 						w.Draw()
 						termbox.Flush()
 
@@ -61,16 +59,12 @@ var MENU = Menu{
 								}
 								if ev.Ch == rune('n') {
 									termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
-									for _, editorWindow := range e.Windows {
-										editorWindow.Draw()
-									}
+									e.DrawWindows()
 									termbox.Flush()
 									return
 								}
 							}
-							for _, editorWindow := range e.Windows {
-								editorWindow.Draw()
-							}
+							e.DrawWindows()
 							w.Draw()
 							termbox.Flush()
 						}
