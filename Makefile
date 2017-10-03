@@ -4,7 +4,7 @@ run:
 	go run main.go
 
 test:
-	ginkgo common windows menu
+	ginkgo common windows menu common
 
 watch_test:
 	ginkgo watch --notify common windows menu

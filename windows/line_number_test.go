@@ -13,9 +13,9 @@ var _ = Describe("Window Line Numbers", func() {
 		window = &Window{
 			EnableLineNum: true,
 		}
-		window.Content = [][]byte{
-			[]byte("1"),
-			[]byte("2"),
+		window.Content = [][]rune{
+			[]rune("1"),
+			[]rune("2"),
 		}
 		window.SetCursor(0, 0)
 	})
@@ -29,7 +29,7 @@ var _ = Describe("Window Line Numbers", func() {
 				Expect(window.lineNumerLen()).To(Equal(1))
 
 				for i := 0; i <= 10; i++ {
-					window.Content = append(window.Content, [][]byte{[]byte("a")}...)
+					window.Content = append(window.Content, [][]rune{[]rune("a")}...)
 				}
 				Expect(window.lineNumerLen()).To(Equal(2))
 			})

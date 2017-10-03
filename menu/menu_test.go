@@ -41,6 +41,7 @@ var _ = Describe("Menu", func() {
 				},
 				SubMenu{
 					Title: "submenu2",
+					Key:   rune('z'),
 				},
 			},
 		}
@@ -57,9 +58,9 @@ var _ = Describe("Menu", func() {
 			It("sets the window content to the main submenus", func() {
 				Expect(window.Content).To(BeEmpty())
 				menu.TriggerListener(window, termbox.KeySpace)
-				Expect(window.Content).To(Equal([][]byte{
-					[]byte(" submenu1 "),
-					[]byte(" submenu2 "),
+				Expect(window.Content).To(BeEquivalentTo([][]rune{
+					[]rune("  submenu1➔ z"),
+					[]rune("  submenu2➔ z"),
 				}))
 			})
 		})
@@ -110,8 +111,8 @@ var _ = Describe("Menu", func() {
 		Context("on first enter to SubMenu", func() {
 			It("renders the submenu tree", func() {
 				menu.Process(window, editor, rune('z'))
-				Expect(window.Content).To(Equal([][]byte{
-					[]byte(" submenu1-submenu1 "),
+				Expect(window.Content).To(Equal([][]rune{
+					[]rune("  submenu1-submenu1➔ a"),
 				}))
 			})
 		})

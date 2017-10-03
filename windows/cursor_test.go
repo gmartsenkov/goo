@@ -23,10 +23,10 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorUp", func() {
 		BeforeEach(func() {
-			window.Content = [][]byte{
-				[]byte("1"),
-				[]byte("23"),
-				[]byte("234"),
+			window.Content = [][]rune{
+				[]rune("1"),
+				[]rune("23"),
+				[]rune("234"),
 			}
 		})
 
@@ -117,9 +117,9 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorDown", func() {
 		BeforeEach(func() {
-			window.Content = [][]byte{
-				[]byte("23"),
-				[]byte("1"),
+			window.Content = [][]rune{
+				[]rune("23"),
+				[]rune("1"),
 			}
 		})
 		It("moves the cursor down", func() {
@@ -152,10 +152,10 @@ var _ = Describe("Window Cursor", func() {
 		Context("when line is outside the window bounds", func() {
 			BeforeEach(func() {
 				window.Dimensions.Rows = 1
-				window.Content = [][]byte{
-					[]byte("1"),
-					[]byte("23"),
-					[]byte("234"),
+				window.Content = [][]rune{
+					[]rune("1"),
+					[]rune("23"),
+					[]rune("234"),
 				}
 				window.SetCursor(0, 0)
 			})
@@ -234,8 +234,8 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorLeft", func() {
 		BeforeEach(func() {
-			window.Content = [][]byte{
-				[]byte("1234"),
+			window.Content = [][]rune{
+				[]rune("1234"),
 			}
 		})
 
@@ -272,8 +272,8 @@ var _ = Describe("Window Cursor", func() {
 
 	Describe("MoveCursorRight", func() {
 		BeforeEach(func() {
-			window.Content = [][]byte{
-				[]byte("1234"),
+			window.Content = [][]rune{
+				[]rune("1234"),
 			}
 		})
 

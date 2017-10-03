@@ -41,36 +41,41 @@ var _ = Describe("SubMenu", func() {
 			subMenus = SubMenus{
 				SubMenu{
 					Title: "Test 1",
+					Key:   rune('t'),
 				},
 				SubMenu{
 					Title: "Test 2",
+					Key:   rune('t'),
 				},
 				SubMenu{
 					Title: "Test 3",
+					Key:   rune('t'),
 				},
 				SubMenu{
 					Title: "Test 4",
+					Key:   rune('t'),
 				},
 			}
 		})
 
 		Context("with width 20", func() {
 			It("returns correct content", func() {
-				content := subMenus.ContentForWindow(SubMenu{}, 20)
-				Expect(content).To(Equal([][]byte{
-					[]byte(" Test 1  Test 2 "),
-					[]byte(" Test 3  Test 4 "),
+				content := subMenus.ContentForWindow(SubMenu{}, 30)
+				Expect(content).To(Equal([][]rune{
+					[]rune("  Test 1➔ t  Test 2➔ t"),
+					[]rune("  Test 3➔ t  Test 4➔ t"),
 				}))
 			})
 		})
 		Context("with width 10", func() {
-			FIt("returns correct content", func() {
+			It("returns correct content", func() {
 				content := subMenus.ContentForWindow(SubMenu{}, 10)
-				Expect(content).To(BeEquivalentTo([][]byte{
-					[]byte(" Test 1 "),
-					[]byte(" Test 2 "),
-					[]byte(" Test 3 "),
-					[]byte(" Test 4 "),
+				Expect(content).To(BeEquivalentTo([][]rune{
+					[]rune{},
+					[]rune("  Test 1➔ t"),
+					[]rune("  Test 2➔ t"),
+					[]rune("  Test 3➔ t"),
+					[]rune("  Test 4➔ t"),
 				}))
 			})
 		})
