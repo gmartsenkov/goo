@@ -49,11 +49,14 @@ var MENU = Menu{
 						w.EnableSolidForeground = true
 						w.EnableBoldContent = true
 
-						e.Clear()
-						e.DrawWindows()
-						w.Draw()
-						termbox.Flush()
+						drawBox := func() {
+							e.Clear()
+							e.DrawWindows()
+							w.Draw(e.Theme)
+							termbox.Flush()
+						}
 
+						drawBox()
 						for {
 							switch ev := termbox.PollEvent(); ev.Type {
 							case termbox.EventKey:
@@ -68,10 +71,7 @@ var MENU = Menu{
 									return
 								}
 							}
-							e.Clear()
-							e.DrawWindows()
-							w.Draw()
-							termbox.Flush()
+							drawBox()
 						}
 					},
 				},

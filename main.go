@@ -5,6 +5,7 @@ import (
 	"goo/editors"
 	"goo/events"
 	"goo/menu"
+	"goo/themes"
 	"goo/windows"
 	"io/ioutil"
 
@@ -16,7 +17,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	termbox.SetOutputMode(termbox.Output256)
 	mainEditor := new(editors.Editor)
+	mainEditor.Theme = themes.DEFAULT
+
 	menu := menu.MENU
 	powerline(mainEditor)
 	fileEditor(mainEditor)

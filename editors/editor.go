@@ -2,12 +2,14 @@ package editors
 
 import (
 	"goo/common"
+	"goo/themes"
 	"goo/windows"
 
 	termbox "github.com/nsf/termbox-go"
 )
 
 type Editor struct {
+	Theme         themes.Theme
 	Windows       []*windows.Window
 	dimensions    common.Dimensions
 	State         uint8
@@ -15,7 +17,7 @@ type Editor struct {
 }
 
 func (editor *Editor) Clear() {
-	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+	termbox.Clear(editor.Theme.TextColour, editor.Theme.Background)
 }
 
 func (editor *Editor) Draw() {
@@ -27,7 +29,7 @@ func (editor *Editor) Draw() {
 func (editor *Editor) DrawWindows() {
 	for _, buffer := range editor.Windows {
 		buffer.CustomLoopFunc(buffer)
-		buffer.Draw()
+		buffer.Draw(editor.Theme)
 	}
 }
 

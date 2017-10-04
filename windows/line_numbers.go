@@ -2,12 +2,13 @@ package windows
 
 import (
 	"goo/common"
+	"goo/themes"
 	"strconv"
 
 	termbox "github.com/nsf/termbox-go"
 )
 
-func (window *Window) drawLineNumbers() {
+func (window *Window) drawLineNumbers(theme themes.Theme) {
 	position := window.Position
 	lineLenNum := window.lineNumerLen()
 	num := make([]byte, lineLenNum)

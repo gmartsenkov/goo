@@ -23,7 +23,7 @@ func (menu *Menu) TriggerListener(editor *editors.Editor, key termbox.Key, ch ru
 	drawMenu := func() {
 		editor.Clear()
 		editor.DrawWindows()
-		window.Draw()
+		window.Draw(editor.Theme)
 		termbox.Flush()
 	}
 
