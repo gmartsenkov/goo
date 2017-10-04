@@ -15,11 +15,44 @@ type Menu struct {
 	Query      []rune
 }
 
-func (menu *Menu) TriggerListener(window *windows.Window, key termbox.Key) {
+func (menu *Menu) TriggerListener(editor *editors.Editor, key termbox.Key, ch rune) {
+	w, h := termbox.Size()
+	window := &windows.Window{}
+	window.EnableBoldContent = true
+	window.EnableBorder = true
+	window.EnableSolidForeground = true
+	window.Dimensions.Cols = w
+	window.Position.Y = h - window.Dimensions.Rows
+
 	if key == menu.TriggerKey {
 		menu.triggered = true
 		window.Content = menu.SubMenus.ContentForWindow(SubMenu{}, window.Dimensions.Cols)
+		editor.Clear()
+		editor.DrawWindows()
+		window.Dimensions.Rows = len(window.Content)
+		window.Position.Y = h - window.Dimensions.Rows - 3
+		window.Draw()
+		termbox.Flush()
 	}
+
+	for menu.IsTriggered() {
+
+		switch ev := termbox.PollEvent(); ev.Type {
+		case termbox.EventKey:
+			menu.Process(window, editor, ev.Ch)
+		}
+
+		window.Dimensions.Rows = len(window.Content)
+		window.Position.Y = h - window.Dimensions.Rows - 3
+		editor.Clear()
+		editor.DrawWindows()
+		window.Draw()
+		termbox.Flush()
+	}
+
+	editor.Clear()
+	editor.Draw()
+	termbox.Flush()
 }
 
 func (menu *Menu) IsTriggered() bool {

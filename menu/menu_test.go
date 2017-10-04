@@ -48,39 +48,6 @@ var _ = Describe("Menu", func() {
 		}
 	})
 
-	Describe("TriggerListener", func() {
-		Context("when trigger key", func() {
-			It("sets trigger to true", func() {
-				Expect(menu.triggered).To(BeFalse())
-				menu.TriggerListener(window, termbox.KeySpace)
-				Expect(menu.triggered).To(BeTrue())
-			})
-
-			It("sets the window content to the main submenus", func() {
-				Expect(window.Content).To(BeEmpty())
-				menu.TriggerListener(window, termbox.KeySpace)
-				Expect(window.Content).To(BeEquivalentTo(common.Cells{
-					common.RunesToCells([]rune("  submenu1➔ z")),
-					common.RunesToCells([]rune("  submenu2➔ z")),
-				}))
-			})
-		})
-
-		Context("when non trigger key", func() {
-			It("does not change triggered to true", func() {
-				Expect(menu.triggered).To(BeFalse())
-				menu.TriggerListener(window, termbox.KeyBackspace)
-				Expect(menu.triggered).To(BeFalse())
-			})
-
-			It("does not write to the window content", func() {
-				Expect(window.Content).To(BeEmpty())
-				menu.TriggerListener(window, termbox.KeyBackspace)
-				Expect(window.Content).To(BeEmpty())
-			})
-		})
-	})
-
 	Describe("IsTriggered", func() {
 		Context("when triggered true", func() {
 			It("returns true", func() {

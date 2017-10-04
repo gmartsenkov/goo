@@ -14,6 +14,10 @@ type Editor struct {
 	currentWindow uint8
 }
 
+func (editor *Editor) Clear() {
+	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+}
+
 func (editor *Editor) Draw() {
 	editor.DrawWindows()
 	cursor := editor.CurrentWindow().Cursor

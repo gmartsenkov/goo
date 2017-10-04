@@ -21,7 +21,7 @@ func main() {
 	powerline(mainEditor)
 	fileEditor(mainEditor)
 
-	termbox.Clear(termbox.ColorWhite, termbox.ColorDefault)
+	mainEditor.Clear()
 	mainEditor.Draw()
 	termbox.Flush()
 	for {
