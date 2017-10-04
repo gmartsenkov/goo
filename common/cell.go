@@ -21,15 +21,19 @@ func BytesToCells(b []byte) []Cell {
 
 	return tmp
 }
-
-func RunesToCells(b []rune) []Cell {
+func RunesToCellsWithStyle(style termbox.Attribute, b []rune) []Cell {
 	tmp := []Cell{}
 	for _, x := range b {
-		tmp = append(tmp, Cell{Ch: x})
+		tmp = append(tmp, Cell{Ch: x, Fg: style})
 	}
 
 	return tmp
 }
+
+func RunesToCells(b []rune) []Cell {
+	return RunesToCellsWithStyle(0, b)
+}
+
 func CellsAsRuneArray(cells []Cell) []rune {
 	runeArray := []rune{}
 	for _, cell := range cells {

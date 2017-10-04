@@ -1,6 +1,7 @@
 package common
 
 import (
+	"github.com/nsf/termbox-go"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -33,6 +34,18 @@ var _ = Describe("Cells", func() {
 		It("coverts the runes array into cells array", func() {
 			runeArray := []rune("test")
 			Expect(RunesToCells(runeArray)).To(Equal(cellArray))
+		})
+	})
+	Describe("RunesToCellsWithStyle", func() {
+		It("coverts the runes array into cells array with the style", func() {
+			runeArray := []rune("test")
+			result := RunesToCellsWithStyle(termbox.ColorBlue, runeArray)
+			Expect(len(result)).To(Equal(4))
+
+			for i, cell := range result {
+				Expect(cell.Ch).To(Equal(runeArray[i]))
+				Expect(cell.Fg).To(Equal(termbox.ColorBlue))
+			}
 		})
 	})
 })
