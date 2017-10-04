@@ -36,11 +36,18 @@ var MENU = Menu{
 						content := common.Cells{}
 						content = append(content, common.BytesToCells([]byte("")))
 						content = append(content, common.BytesToCells([]byte(" Are you sure you want to quit?")))
-						yN := append([]common.Cell{}, common.RunesToCells([]rune("            "))...)
-						yN = append(yN, common.Cell{Ch: 'y', Fg: termbox.ColorGreen})
-						yN = append(yN, common.Cell{Ch: '/'})
-						yN = append(yN, common.Cell{Ch: 'n', Fg: termbox.ColorRed})
-						yN = append(yN, common.RunesToCells([]rune("            "))...)
+						yN := common.RunesToCells([]rune("         "))
+						yN = append(yN, common.RunesToCellsWithStyle(
+							termbox.ColorGreen,
+							[]rune("[Y\\y]"),
+						)...)
+						yN = append(yN, common.RunesToCells([]rune(" \\ "))...)
+						yN = append(yN, common.RunesToCellsWithStyle(
+							termbox.ColorRed,
+							[]rune("[N\\n]"),
+						)...)
+
+						yN = append(yN, common.RunesToCells([]rune("         "))...)
 
 						w := predefined_windows.PopupCenterWindow(append(content, yN))
 
@@ -55,11 +62,11 @@ var MENU = Menu{
 						for {
 							switch ev := termbox.PollEvent(); ev.Type {
 							case termbox.EventKey:
-								if ev.Ch == rune('y') {
+								if ev.Ch == rune('y') || ev.Ch == rune('Y') {
 									e.Close()
 									return
 								}
-								if ev.Ch == rune('n') {
+								if ev.Ch == rune('n') || ev.Ch == rune('N') {
 									e.Clear()
 									e.DrawWindows()
 									termbox.Flush()
