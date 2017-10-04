@@ -30,3 +30,11 @@ func (editor *Editor) DrawWindows() {
 		buffer.Draw()
 	}
 }
+
+func (editor *Editor) Size() common.Dimensions {
+	w, h := termbox.Size()
+	return common.Dimensions{
+		Cols: w,
+		Rows: h,
+	}
+}

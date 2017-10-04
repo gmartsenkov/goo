@@ -3,6 +3,7 @@ package menu
 import (
 	"errors"
 	"goo/editors"
+	"goo/predefined_windows"
 	"goo/windows"
 
 	termbox "github.com/nsf/termbox-go"
@@ -17,37 +18,33 @@ type Menu struct {
 
 func (menu *Menu) TriggerListener(editor *editors.Editor, key termbox.Key, ch rune) {
 	w, h := termbox.Size()
-	window := &windows.Window{}
-	window.EnableBoldContent = true
-	window.EnableBorder = true
-	window.EnableSolidForeground = true
+	window := predefined_windows.Menu()
 	window.Dimensions.Cols = w
-	window.Position.Y = h - window.Dimensions.Rows
+	drawMenu := func() {
+		editor.Clear()
+		editor.DrawWindows()
+		window.Draw()
+		termbox.Flush()
+	}
 
 	if key == menu.TriggerKey {
 		menu.triggered = true
 		window.Content = menu.SubMenus.ContentForWindow(SubMenu{}, window.Dimensions.Cols)
-		editor.Clear()
-		editor.DrawWindows()
 		window.Dimensions.Rows = len(window.Content)
 		window.Position.Y = h - window.Dimensions.Rows - 3
-		window.Draw()
-		termbox.Flush()
+		drawMenu()
 	}
 
 	for menu.IsTriggered() {
 
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
-			menu.Process(window, editor, ev.Ch)
+			menu.Process(&window, editor, ev.Ch)
 		}
 
 		window.Dimensions.Rows = len(window.Content)
 		window.Position.Y = h - window.Dimensions.Rows - 3
-		editor.Clear()
-		editor.DrawWindows()
-		window.Draw()
-		termbox.Flush()
+		drawMenu()
 	}
 
 	editor.Clear()
