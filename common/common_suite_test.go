@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestFormatters(t *testing.T) {
+func TestCommon(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Common Helpers")
 }

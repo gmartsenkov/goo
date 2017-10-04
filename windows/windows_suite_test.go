@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestFormatters(t *testing.T) {
+func TestWindows(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Windows")
 }

@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestFormatters(t *testing.T) {
+func TestMenu(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Menu")
 }
